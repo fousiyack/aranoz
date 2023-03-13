@@ -1,0 +1,45 @@
+{% extends 'base.html' %} {% block content %}
+
+
+<section class="section-conten padding-y bg" style="margin-top: 100px">
+    <div class="container card mb-5" style="background-color: white">
+      <div class="row">
+        {% include 'include/dashboard_sidebar.html' %}
+  
+        <main class="col-md-9">
+          {% for message in messages %}
+          <div>
+            <p class=" my-5 alert alert-{{message.tags}}">{{message}}</p>
+          </div>
+          {% endfor %}
+  
+          <article class="card my-3">
+            <header class="card-header" style="background-color: #ffffff">
+              <h3><strong class="d-inline-block mr-3">Address </strong></h3>
+            </header>
+            <div class="card-body d-flex flex-wrap justify-content-between"> <!-- add the flexbox classes -->
+              {% for address in addresses %}
+              <div class="card mx-3 my-3" style="width: 18rem;"> <!-- add the margin classes -->
+                <div class="card-body">
+                  <h5 class="card-title">{{ address.first_name }} {{ address.last_name }} </h5>
+                  <p class="card-text"><h6>{{address.address_line_1}} {{ address.address_line_2|default:'' }} -</h6></p>
+                  <h6 class="card-subtitle mb-2 text-muted"> {{address.city }},<br> {{ address.state }},<br> {{ address.country }} -<br>
+                    {{address.zip_code }}</h6>
+                  <a href="{% url 'address:address_update' address.pk %}" class="card-link">Edit</a>
+                  <a href="{% url 'address:address_delete' address.pk %}" class="card-link">Delete</a>
+                </div>
+              </div>
+              {% endfor %}
+            
+            </div>
+  
+          </article>
+          <!-- order-group.// -->
+        </main>
+  
+        <!-- row.// -->
+      </div>
+    </div>
+  </section>
+  
+{% endblock %}

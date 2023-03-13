@@ -1,0 +1,38 @@
+{% extends 'admin/admin_base.html' %} {% block content %}
+<h2>Coupon List</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Sl No</th>
+      <th>Coupon Code</th>
+      <th>Discount Percentage</th>
+      <th>Expiry Date</th>
+      <th>Minimum Purchase Amount</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for coupon in coupons %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ coupon.coupon_code }}</td>
+      <td>{{ coupon.discount_percentage }}</td>
+      <td>{{ coupon.expiry_date }}</td>
+      <td>{{ coupon.minimum_purchase_amount }}</td>
+      <td>
+        {% comment %}
+        <a href="{% url 'coupons:detail' coupon.pk %}">Detail</a>
+        {% endcomment%}
+
+        <a href="{% url 'coupons:update' coupon.pk %}">Update</a>
+        <a href="{% url 'coupons:delete' coupon.pk %}">Delete</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="5">No coupons found.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

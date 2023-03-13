@@ -1,0 +1,190 @@
+{% extends 'admin/admin_base.html' %} {% block content %}
+<!-- ========================= SECTION CONTENT ========================= -->
+<style>
+  .swal-modal {
+    width: 400px;
+  }
+
+  .swal-title {
+    font-size: 18px;
+  }
+
+  .swal-text {
+    font-size: 14px;
+  }
+</style>
+<section class="section-content mt-3 bg">
+  <div class="container">
+    <h1 class="text-center h2 mb-4">Manage Products</h1>
+    <div class="d-flex mb-3 justify-content-end">
+      <form action="{% url 'manage_product' %}" class="search" method="POST">
+        {% csrf_token %}
+        <div class="input-group w-100">
+          <input
+            type="text"
+            class="form-control"
+            style="width: 60%"
+            placeholder="Search"
+            name="keyword"
+          />
+
+          <div class="input-group-append">
+            <button class="btn btn-dark" type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row">
+      <main class="col-md-8">
+        <div class="d-flex justify-content-end">
+          <a href=" {% url 'add_product' %} " class="btn btn-info mr-md-4"
+            >Add Products <i class="fa fa-plus-circle" aria-hidden="true"></i
+          ></a>
+        </div>
+        <table class="table table-borderless">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col"></th>
+              <th scope="col">Name</th>
+
+              <th scope="col">Category</th>
+              <th scope="col">Price</th>
+              <th scope="col">Stock</th>
+              <th scope="col">Available</th>
+
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for product in products %}
+            <tr>
+              <th scope="row">{{ product.id }}</th>
+              <td>
+                <img
+                  src="{{ product.images.url }}"
+                  style="height: 80px"
+                  alt="IMG"
+                />
+              </td>
+              <td class="link-clr">
+                <a href="{% url 'edit_product' product.id %}"
+                  >{{ product.product_name }}</a
+                >
+              </td>
+
+              <td>{{ product.category }}</td>
+              <td>₹{{ product.price }}</td>
+              <td>{{ product.stock }}</td>
+              <td>
+                {% if product.is_available %}
+                <p style="color: #28a745">Active</p>
+
+                {% else %}
+                <p style="color: #c21010">Disabled</p>
+                {% endif %}
+              </td>
+              <td></td>
+              <td></td>
+              <td>
+                <form
+                  method="POST"
+                  action="{% url 'delete_product' product.id %}"
+                >
+                  {% csrf_token %}
+                  <input name="_method" type="hidden" value="DELETE" />
+                  <button
+                    type="submit"
+                    class="btn btn-sm btn-danger show_confirm"
+                    data-toggle="tooltip"
+                    title="Delete"
+                  >
+                    Delete<i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </form>
+              </td>
+              <td>
+                <a
+                  href="{% url 'edit_product' product.id %}"
+                  class="btn btn-sm btn-secondary"
+                  >Edit <i class="fa fa-wrench" aria-hidden="true"></i
+                ></a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <!-- order-group.// -->
+        <div class="container">
+          <nav class="mt-4" aria-label="Page navigation sample">
+            {% if products.has_other_pages %}
+            <ul class="pagination">
+              {% if products.has_previous %}
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="?page={{ products.previous_page_number }}"
+                  >Previous</a
+                >
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" href="#">Previous</a>
+              </li>
+              {% endif %} {% for page_number in products.paginator.page_range %}
+              {% if products.number == page_number %}
+              <li class="page-item active">
+                <a class="page-link" href="#">{{ page_number }}</a>
+              </li>
+              {% else %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_number }}"
+                  >{{ page_number }}</a
+                >
+              </li>
+              {% endif %} {% endfor %} {% if products.has_next %}
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="?page={{ products.next_page_number }}"
+                  >Next</a
+                >
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" href="#">Next</a>
+              </li>
+              {% endif %}
+            </ul>
+            {% endif %}
+          </nav>
+        </div>
+      </main>
+    </div>
+    <!-- row.// -->
+  </div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+<script type="text/javascript">
+  $(".show_confirm").click(function (event) {
+    var form = $(this).closest("form");
+    var name = $(this).data("name");
+    event.preventDefault();
+    swal({
+      title: `Are you sure you want to delete this coupon?`,
+
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        form.submit();
+      }
+    });
+  });
+</script>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+{% endblock content %}

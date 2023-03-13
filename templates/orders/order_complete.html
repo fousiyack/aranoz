@@ -1,0 +1,238 @@
+{% load static %} 
+<style>
+
+
+/* Set default font family and size */
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Style the "Go to Home" link */
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+/* Style the container */
+.container {
+    background-color: white;
+    padding: 25px;
+    border-radius: 20px;
+    width: 90rem;
+}
+
+/* Style the invoice title */
+.invoice-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.invoice-title h2 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+}
+
+.invoice-title h3 {
+    font-size: 24px;
+    color: #555;
+}
+
+/* Style the address */
+.address {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Style the order summary table */
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody + tbody {
+    border-top: 2px solid #dee2e6;
+}
+
+.table .table-condensed > tbody > tr > td {
+    padding: 8px;
+}
+
+.table-condensed {
+    font-size: 14px;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.table tr {
+    border-top: 1px solid #ccc;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table th {
+    text-align: left;
+    vertical-align: middle;
+    border-top: 1px solid #ccc;
+    border-bottom: 2px solid #ccc;
+}
+
+.table .text-center {
+    text-align: center !important;
+}
+
+.table .text-right {
+    text-align: right !important;
+}
+
+.table th, .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Style the thank you message */
+.panel-heading {
+    text-align: center;
+    color: rgb(0, 212, 60);
+    margin-bottom: 20px;
+}
+
+.panel-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Style the continue shopping button */
+.ctn {
+    background-color: rgb(0, 154, 0);
+    padding: 20px;
+    border : 20px;
+}
+</style>
+<body>
+    <a href="{% url 'home' %}">Go to Home</a>
+                     </div>
+                     
+                  </div>
+               </div>
+            </div>
+         </div>
+		
+         <div class="container" style="background-color: white; padding: 25px; border-radius: 20px; width: 90rem;">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="invoice-title">
+                        <h2>Invoice</h2><h3 class="pull-right">Order {{order_number}}</h3>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <address>
+                                <strong>Billed To:</strong><br>
+                                    {{orders.first_name}} {{orders.last_name}}<br>
+                                    {{orders.address_line_1}}<br>
+                                    {{orders.city}}<br>
+                                    {{orders.zip_code}} {{orders.country}}
+                            </address>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <address>
+                                <strong>Payment Method:{{ orders.payment_mode }}</strong><br>
+                                Payment Id: {{ orders.payment_id }}<br>
+                                {{orders.user.email}} <br>
+                                Payment Status : <h5 style="color: rgb(0, 154, 0);">{{ orders.status }}</h5>
+                            </address>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <address>
+                                <strong>Order Date:</strong><br>
+                                {{orders.created_at}}<br><br>
+                            </address>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><strong>Order summary</strong></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <td><strong>Item</strong></td>
+                                            <td class="text-center"><strong>Price</strong></td>
+                                            <td class="text-center"><strong>Quantity</strong></td>
+                                            <td class="text-right"><strong>Totals</strong></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in orderitems %}
+                                        <tr>
+                                            <td>{{item.product.product_name}}</td>
+                                            <td class="text-center">{{ item.product.price}}</td>
+                                            <td class="text-center">{{item.quantity}}</td>
+                                            <!-- <td class="text-right">{{item.toatal}}</td> -->
+                                        </tr>
+                                        {% endfor %}
+                                        
+                                      
+                                       
+                                        <tr>
+                                            <td class="no-line"></td>
+                                            <td class="no-line"></td>
+                                            <td class="no-line text-center"><strong>Total price</strong></td>
+                                            <td class="no-line text-right">{{orders.total_price}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="panel-heading" style="text-align: center; color: rgb(0, 212, 60);">
+                        <h2 class="panel-title"><strong>Thank you for doing shopping with us...</strong></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="{% url 'store' %}"><div class="btn-success w-100">
+            <h3 style="text-align: center;">Continue Shopping</h3>
+        </div></a>
+        
+
+		
+
+		 
+</body>
+ 

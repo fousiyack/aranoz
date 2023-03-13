@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {% block content %}
+
+<section class="section-conten padding-y bg" style="margin-top: 100px">
+  <div class="container">
+    <div class="row">
+      {% include 'include/dashboard_sidebar.html' %}
+      <main class="col-md-9">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Wallet Balance</h5>
+                <p class="card-text">{{wallet.balance}}</p>
+                <a href="#" class="btn btn-primary">Add Funds</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Transaction History</h5>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Description</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>01/01/2023</td>
+                      <td>Added funds to wallet</td>
+                      <td>$50.00</td>
+                    </tr>
+                    <tr>
+                      <td>01/02/2023</td>
+                      <td>Payment for order #1234</td>
+                      <td>$25.00</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

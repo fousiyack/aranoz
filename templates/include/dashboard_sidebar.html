@@ -1,0 +1,38 @@
+<aside class="sidebar col-md-3">
+  <div class="sidebar-layout pt:5rem">
+    <div class="sidebar-content">
+      <ul class="list-group">
+        <a href="{%url 'dashboard'%}" class="list-group-item">Dashboard</a>
+
+        <a href="{%url 'myorder'%}" class="list-group-item">My orders </a>
+
+        <a href="{%url 'edit_profile'%}" class="list-group-item"
+          >Edit Profile
+        </a>
+        <a href="{%url 'address:addresslist'%}" class="list-group-item"
+          >Manage Addresses</a
+        >
+
+        <a href="{%url 'coupon'%}" class="list-group-item">My Coupons</a>
+
+        {% comment %} <a href="{%url 'coupons:wallet_balance'%}" class="list-group-item"
+          >My Wallet</a
+        > {% endcomment %}
+
+        <a href="{%url 'change_password'%}" class="list-group-item"
+          >Change Password</a
+        >
+
+        <br />
+
+        <a
+          href="{%url 'logout'%}"
+          class="btn btn-primary btn-lg active"
+          role="button"
+          aria-pressed="true"
+          >Logout</a
+        >
+      </ul>
+    </div>
+  </div>
+</aside>

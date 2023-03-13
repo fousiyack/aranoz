@@ -1,0 +1,7 @@
+{% autoescape off %}  
+Hi {{ user.first_name }},  Thank you for signing up!
+To confirm your email address and activate your account, click the link below.👇
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}  
+If you encountered any issues while confirming the email, do not hesitate to Contact me.
+{% endautoescape %}  

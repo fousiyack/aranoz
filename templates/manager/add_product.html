@@ -1,0 +1,62 @@
+{% extends 'admin/admin_base.html' %} {% load static%} {% block content %}
+
+<section class="section-content padding-y bg" style="margin-top: 100px">
+  <div class="container mt-5 mb-5">
+    <div class="row d-flex justify-content-center">
+      <div class="col-8">
+        {% for message in messages %}
+        <div>
+          <p class=" my-5 alert alert-{{message.tags}}">{{message}}</p>
+        </div>
+        {% endfor %}
+        <h2 class="text-center font-weight-bold my-5">Add Products</h2>
+
+        <form
+          action="{% url 'add_product' %}"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          {% csrf_token %}
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="id_name">Product Name</label>
+              {{ form.product_name }}
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="product_price">Product Price</label>
+              {{ form.price }}
+            </div>
+            <div class="form-group col-md-6">
+              <label for="product_image">Product Image</label>
+              {{ form.images }}
+            </div>
+            <div class="form-group col-md-6">
+              <label for="product_stock">Product Stock</label>
+              {{ form.stock }}
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="product_category">Category</label>
+              {{ form.category }}
+            </div>
+            <div class="form-group col-md-6">
+              <label for="id_is_available">Available</label>
+              {{ form.is_available }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="product_description">Product Description</label>
+            {{ form.description }}
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-dark">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

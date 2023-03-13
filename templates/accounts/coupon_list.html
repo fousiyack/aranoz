@@ -1,0 +1,55 @@
+{% extends 'base.html' %} {% load static%} {% block content %}
+
+<section class="section-conten padding-y bg" style="margin-top: 100px">
+  <div class="container card mb-5" style="background-color: white">
+    <div class="row">
+      {% include 'include/dashboard_sidebar.html' %}
+
+      <main class="col-md-9">
+        {% for message in messages %}
+        <div>
+          <p class=" my-5 alert alert-{{message.tags}}">{{message}}</p>
+        </div>
+        {% endfor %}
+
+        <article class="card my-4">
+          {%if coupons%}
+          <header class="card-header" style="background-color: #ffffff">
+            <h3><strong class="d-inline-block mr-3">Coupon List</strong></h3>
+          </header>
+          <div class="card">
+            <div class="card-body">
+            
+
+              <ul>
+                <table class="table table-borderless">
+                  {% for coupon in coupons %}
+                 <a href="{%url 'store'%}"><li>
+                    <b>{{ coupon.coupon_code }}</b> -
+                    {{coupon.discount_percentage }}% off - Expires on
+                    {{coupon.expiry_date|date:'F j, Y' }} - Minimum purchase
+                    amount: ${{ coupon.minimum_purchase_amount }}</a> 
+                  </li>
+                  <hr />
+                </table>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          {%else%}
+          <div>
+            <h2 class="text-center">Coupon list is empty</h2>
+            <div class="text-center">
+              <a class="btn_1" href="{%url 'store'%}">Continue shopping..</a>
+            </div>
+          </div>
+          {%endif%}
+        </article>
+        <!-- order-group.// -->
+      </main>
+    </div>
+    <!-- row.// -->
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,301 @@
+{% extends 'admin/admin_base.html' %} {% block content %}
+<style>
+  .glow {
+    font-size: 80px;
+    color: #fff;
+    text-align: center;
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+  }
+  @-webkit-keyframes glow {
+    from {
+      text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073,
+        0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+    }
+    to {
+      text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6,
+        0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+    }
+  }
+  /* Rounded border */
+  hr.rounded {
+    border-top: 8px solid lightblue;
+    border-radius: 5px;
+  }
+</style>
+<div class="row">
+  <div class="col-sm-3 p-2">
+    <div class="card shadow bg-dark">
+      <div class="card-body">
+        <h4 class="text-light">Total Users</h4>
+        <h5 style="color: #f1948a">{{user_count}}</h5>
+      </div>
+      <div class="card-footer">
+        <a href="{% url 'manage_user'%}" class="text-warning"
+          >View Details >></a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 p-2">
+    <div class="card shadow bg-dark">
+      <div class="card-body">
+        <h4 class="text-light">Total Order</h4>
+        <h5 style="color: #f1948a">{{order_count}}</h5>
+      </div>
+      <div class="card-footer">
+        <a href="{% url 'order_management' %}" class="text-warning"
+          >View Details >></a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 p-2">
+    <div class="card shadow bg-dark">
+      <div class="card-body">
+        <h4 class="text-light">Total Category</h4>
+        <h5 style="color: #f1948a">{{category_count}}</h5>
+      </div>
+      <div class="card-footer">
+        <a href="{% url 'manage_category'%}" class="text-warning"
+          >View Details >></a
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-3 p-2">
+    <div class="card shadow bg-dark">
+      <div class="card-body">
+        <h4 class="text-light">Total Products</h4>
+        <h5 style="color: #f1948a">{{product_count}}</h5>
+      </div>
+      <div class="card-footer">
+        <a href="{% url 'manage_product'%}" class="text-warning"
+          >View Details
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const pipechart = document.getElementById("myPipeChart");
+
+  new Chart(pipechart, {
+    type: "bar",
+    data: {
+      labels: ["order", "product", "user", "category"],
+      datasets: [
+        {
+          label: "Total Orders",
+          data: [
+            "{{order_count}}",
+            "{{product_count}}",
+            "{{user_count}}",
+            "{{category_count}}",
+          ],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+</script>
+{% comment %}
+<div class="chart-container">
+  <canvas id="daily-orders-chart" width="800" height="400"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById("daily-orders-chart").getContext("2d");
+
+  const ordersData = JSON.parse("{{ orders_data|escapejs }}");
+  const daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  const ordersChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: ordersData.map(
+        (order) => daysOfWeek[new Date(order.day).getDay()]
+      ),
+      datasets: [
+        {
+          label: "Daily Order Count",
+          data: ordersData.map((order) => order.order_count),
+          backgroundColor: "rgba(54, 162, 235, 0.2)",
+          borderColor: "rgba(54, 162, 235, 1)",
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+    },
+  });
+</script>
+{% endblock %} {% comment %} {% endcomment %} {% comment %}
+<div class="row">
+  <div class="w-60">
+    <canvas id="myChart" width="300" height="300"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    const ctx = document.getElementById("myChart");
+
+    new Chart(ctx, {
+      type: "doughnut",
+      data: {
+        labels: ["order", "product", "user", "category"],
+        datasets: [
+          {
+            label: "Total",
+            data: [
+              "{{order_count}}",
+              "{{product_count}}",
+              "{{user_count}}",
+              "{{category_count}}",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+  </script>
+
+  <!-- ========================= CHART CONTENT 2 ========================= -->
+
+  <div class="w-30">
+    <canvas id="myPipeChart" width="300" height="300"></canvas>
+  </div>
+  <script>
+    const pipechart = document.getElementById("myPipeChart");
+
+    new Chart(pipechart, {
+      type: "bar",
+      data: {
+        labels: ["order", "product", "user", "category"],
+        datasets: [
+          {
+            label: "Total Orders",
+            data: [
+              "{{order_count}}",
+              "{{product_count}}",
+              "{{user_count}}",
+              "{{category_count}}",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+  </script>
+</div>
+{% endcomment %} {% comment %} {% endcomment %}
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">Sales</div>
+      <div class="card-body">
+        <canvas id="myChart" width="400" height="400"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">Sales</div>
+      <div class="card-body">
+        <canvas id="myPipeChart" width="600" height="400"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%} {% block extrahead %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  var endpoint = "{% url 'chart_data' %}";
+
+  $.ajax({
+    method: "GET",
+    url: endpoint,
+    success: function (data) {
+      var ctx = document.getElementById("myChart").getContext("2d");
+
+      var chart = new Chart(ctx, {
+        type: "pie",
+        data: {
+          labels: data.labels,
+          datasets: [
+            {
+              label: "Count",
+              data: data.data,
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+                "rgba(255, 206, 86, 0.2)",
+                "rgba(75, 192, 192, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+                "rgba(75, 192, 192, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+        },
+      });
+    },
+    error: function (error_data) {
+      console.log("error");
+      console.log(error_data);
+    },
+  });
+</script>
+
+{% endblock %}
