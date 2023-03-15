@@ -97,6 +97,7 @@
                     f[h]["z_" + x.slice(7)] = w.getItem(x);
                   }
                 });
+
             n.referrerPolicy = "origin";
             n.src =
               "../../cdn-cgi/zaraz/sd0d9.js?z=" +
@@ -111,7 +112,8 @@
     </script>
   </head>
   <body>
-    {% include 'include/navbar.html'%} {% block content %} {%endblock%}
+    {% include 'include/navbar.html'%}{% block content %} 
+    {%endblock%}
     {%include 'include/footer.html'%}
 
     <script src="{%static 'js/jquery-1.12.1.min.js'%}"></script>
