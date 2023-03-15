@@ -18,7 +18,7 @@ from django.urls import path,include
 from django.conf.urls.static import static
 from django.conf import settings
 from . import views
-import debug_toolbar
+# import debug_toolbar
 
 urlpatterns = [
     path('admin/', admin.site.urls),
