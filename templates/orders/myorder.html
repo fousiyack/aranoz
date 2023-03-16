@@ -38,7 +38,7 @@
                     <td>$ {{ item.total_price }}</td>
                     {% if item.status == 'Cancelled' %}
                     <td class="text-danger"><b>{{ item.status }}</b></td>
-                    {% elif item.status == 'Pending' %}
+                    {% elif item.status == 'Order Placed' %}
                     <td class="text-warning"><b>{{ item.status }}</b></td>
                     {% else %}
                     <td class="text-success fw-bold">

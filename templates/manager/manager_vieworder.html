@@ -122,7 +122,7 @@
                 <h6>Tracking Number : {{order.tracking_no}}</h6>
                 <br />
               </div>
-              {% if order.status == 'Pending' %}
+              {% if order.status == 'Order Placed ' %}
               <div class="d-flex justify-content-end my-2">
                 <a href="{% url 'manager_accept_order' order.tracking_no %}"
                   ><button class="btn btn-success">Accept Order</button></a
