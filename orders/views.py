@@ -158,12 +158,11 @@ def razorpaycheck(request):
         tax = round((2 * total_price)/100)
         grand_total = total_price + tax
         if request.session['coupon_id']:    
-                coupons = Coupon.objects.get(coupon_code=request.session['coupon_id'])
-                discount = int(grand_total) * coupons.discount_percentage / 100
-                grand_total=int(grand_total)-int(discount)
+            coupons = Coupon.objects.get(coupon_code=request.session['coupon_id'])
+            discount = int(grand_total) * coupons.discount_percentage / 100
+            grand_total=int(grand_total)-int(discount)
         return JsonResponse({
             'total_price' : grand_total
-
         })
     else:
         return redirect('store')
@@ -231,7 +230,7 @@ def cancel_order(request,tracking_no) :
     if order.payment_mode=="COD":
        Order.objects.filter(user=current_user,tracking_no=tracking_no).update(status='Cancelled')
     else:   
-        client = razorpay.Client(auth=("rzp_test_HqkHmr4VjtnaDO", "o2YAnVd9li5Im2su9U79ifVk"))
+        client = razorpay.Client(auth=("RAZOR_KEY_ID", "RAZOR_KEY_SECRET"))
         payment_id = order.payment_id
         amount = order.total_price
         amount=amount*100

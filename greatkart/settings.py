@@ -12,7 +12,15 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import environ
 from django.utils import timezone
+#from decouple import config
+
+
+
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,13 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*sl_6i!+&duvq%^w_9zaf2gzc=))i+#)nne9z7t4bmerm+0do5'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+SECRET_KEY = env("SECRET_KEY")
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
@@ -98,9 +102,10 @@ AUTH_USER_MODEL='accounts.Account'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'EcommDb',
-        'USER':'postgres',
-        'PASSWORD':'12345',
+        
+        'NAME': env('DATABASE_NAME'),
+        'USER':env('DATABASE_USER'),
+        'PASSWORD':env('DATABASE_PASS'),
         'HOST':'localhost',
         'PORT':'5432'
         
@@ -166,8 +171,12 @@ MESSAGE_TAGS = {
 
 #SMTP Configuration
 
-EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST = env('EMAIL_HOST')
 EMAIL_PORT=587
-EMAIL_HOST_USER='greatkart9@gmail.com'
-EMAIL_HOST_PASSWORD='rbgigvjvxnacblos'
+EMAIL_HOST_USER =env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS=True
+
+
+RAZOR_KEY_ID = env('RAZOR_KEY_ID')
+RAZOR_KEY_SECRET = env('RAZOR_KEY_SECRET') 
