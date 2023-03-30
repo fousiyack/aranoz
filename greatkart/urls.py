@@ -38,3 +38,5 @@ urlpatterns = [
 
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+handler404 = "greatkart.views.page_not_found_view"

@@ -24,6 +24,7 @@ from django.core.paginator import Paginator
 # Create your views here.
 import razorpay
 from django.core.mail import send_mail
+import greatkart.settings
 
 @never_cache
 @login_required(login_url=('login')) 
@@ -205,6 +206,8 @@ def order_complete(request):
     print(payment_id)
     order_details = Order.objects.get(payment_id=payment_id)
     orderitems = OrderItem.objects.filter(order=order_details.id)
+    
+    
      
     context={
         'orders': order_details,
@@ -212,7 +215,7 @@ def order_complete(request):
          
     }
         
-    return render(request, 'orders/order_complete.html',context)
+    return render(request, 'orders/order_completeNew.html',context)
 def cod_order_complete(request): 
    #order =Order.objects.filter(tracking_no=tracking_no,user=request.user).first()
    
@@ -230,7 +233,7 @@ def cancel_order(request,tracking_no) :
     if order.payment_mode=="COD":
        Order.objects.filter(user=current_user,tracking_no=tracking_no).update(status='Cancelled')
     else:   
-        client = razorpay.Client(auth=("RAZOR_KEY_ID", "RAZOR_KEY_SECRET"))
+        client = razorpay.Client(auth=(greatkart.settings.RAZOR_KEY_ID,greatkart.settings.RAZOR_KEY_SECRET))
         payment_id = order.payment_id
         amount = order.total_price
         amount=amount*100
