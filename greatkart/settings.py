@@ -29,10 +29,9 @@ TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 
 
 
-
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 SECRET_KEY = env("SECRET_KEY")
-#DEBUG = False
-DEBUG = True
+
 
 
 ALLOWED_HOSTS = ['*']
@@ -100,19 +99,33 @@ AUTH_USER_MODEL='accounts.Account'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        
-        'NAME': env('DATABASE_NAME'),
-        'USER':env('DATABASE_USER'),
-        'PASSWORD':env('DATABASE_PASS'),
-        'HOST':'localhost',
-        'PORT':'5432'
-        
+if DEBUG == True:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            
+            'NAME': env('DATABASE_NAME'),
+            'USER':env('DATABASE_USER'),
+            'PASSWORD':env('DATABASE_PASS'),
+            'HOST':'localhost',
+            'PORT':'5432'
+            
+        }
     }
-}
+
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            
+            'NAME': env('DATABASE_NAME'),
+            'USER':env('DATABASE_USER'),
+            'PASSWORD':env('DATABASE_PASS'),
+            'HOST':'localhost',
+            'PORT':'5432'
+            
+        }
+    }
 
 
 # Password validation
