@@ -170,11 +170,18 @@ if DEBUG == True:
         'greatkart/static',
     ]
 else:
+    # STATIC_URL = '/static/'
+    # import os
+    # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    # STATICFILES_DIRS = [
+    # os.path.join(BASE_DIR, 'greatkart', 'static'),
+    # ]
+
     STATIC_URL = '/static/'
     import os
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'greatkart', 'static'),
+    os.path.join(BASE_DIR, 'greatkart/static'),
     ]
 
 
