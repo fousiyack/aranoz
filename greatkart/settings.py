@@ -174,7 +174,7 @@ else:
     import os
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'greatcart', 'static'),
+    os.path.join(BASE_DIR, 'greatkart', 'static'),
     ]
 
 
